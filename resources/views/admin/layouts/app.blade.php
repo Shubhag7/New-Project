@@ -12,6 +12,10 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link href="{{asset('css/index.css')}}" rel="stylesheet" />
+		<link rel="stylesheet" href="{{ asset('plugins/dropzone/min/dropzone.min.css')}}">
+		<meta name="csrf-token" content="{{csrf_token()}}">
+
+
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -35,7 +39,10 @@
 
 
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="{{asset('js/index.js')}}"></script>
+	<script src="{{ asset('plugins/dropzone/min/dropzone.min.js')}}"></script>
+
+    @yield('customJs')
 </body>
 </html>

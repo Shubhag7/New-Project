@@ -23,9 +23,9 @@
                 <i class="fas fa-angle-right menu-angle p-2"></i>
             </div>
             <div class="dropdown-menu">
-                <div class="sub-items"><i class="fas fa-angle-right p-1"></i>All Students</div>
+                <div class="sub-items"><a href="{{route('students.list')}}"><i class="fas fa-angle-right p-1"></i>All Students</a></div>
                 <div class="sub-items"><i class="fas fa-angle-right p-1"></i>Students Details</div>
-                <div class="sub-items"><i class="fas fa-angle-right p-1"></i>Admission Form</div>
+                <div class="sub-items"><a href="{{route('students.create')}}"><i class="fas fa-angle-right p-1"></i>Admission Form</a></div>
                 <div class="sub-items"><i class="fas fa-angle-right p-1"></i>Student Promotion</div>
             </div>
             <div class="sidebar-body-li sub-menu-toggle" id="sub-menu-toggle-teachers">

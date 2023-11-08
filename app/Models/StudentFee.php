@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class StudentFee extends Model
 {
     use HasFactory;
-
-    public function feeSlips()
-    {
-        return $this->hasMany(StudentFee::class);
-    }
 }

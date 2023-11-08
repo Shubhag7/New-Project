@@ -13,20 +13,34 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->enum('admission_type',['Regular','RTE','Scholarship']);
+            $table->string('student_name');
+            $table->string('father_name');
+            $table->string('mother_name');
+            $table->string('student_aadhar_number', 12);
+            $table->string('father_aadhar_number', 12);
+            $table->string('mother_aadhar_number', 12);
+            $table->string('father_mobile_number_1')->nullable();
+            $table->string('father_mobile_number_2')->nullable();
+            $table->string('mother_mobile_number_1')->nullable();
+            $table->string('mother_mobile_number_2')->nullable();
+            $table->string('official_communication_number')->nullable();
             $table->enum('gender',['M','F','O'])->comment("Male->M, Female->F, Other->O");
             $table->date('date_of_birth');
-            $table->string('religion');
+            $table->string('nationality');
+            $table->enum('religion', ['Hindu','Islam','Christian','Buddish','Sikh','Other']);
+            $table->string('caste');
+            $table->string('category');
             $table->string('roll_no');
-            $table->string('blood_group', 3);
-            $table->string('class', 3);
-            $table->string('section', 1);
-            $table->string('email')->unique();
+            $table->enum('blood_group', ['A+','A-','B+','B-','O+','O-','AB+','AB-'])->nullable();
+            $table->enum('class', ['PC','UKG','One','Two','Three','Four','Five','Six','Seven','Eight']);
+            $table->string('email');
             $table->string('address');
-            $table->string('phone_number')->nullable();
             $table->string('discription')->nullable();
-            $table->string('image');
+            $table->string('student_image')->nullable();
+            $table->string('student_aadhar_image')->nullable();
+            $table->string('father_aadhar_image')->nullable();
+            $table->string('mother_aadhar_image')->nullable();
             $table->timestamps();
         });
     }
