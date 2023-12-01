@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\FeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\admin\StudentController;
 use App\Http\Controllers\admin\TempImagesController;
@@ -21,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('admin\layouts\app');
+    return view('admin.layouts.app');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // ->middleware(['auth', 'verified']);
@@ -34,6 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/students',[StudentController::class,'store'])->name('students.store');
     Route::get('/students/edit/{id}',[StudentController::class,'edit'])->name('students.edit');
     Route::post('/students/{id}',[StudentController::class,'update'])->name('students.update');
+    Route::get('/students/details/{id}',[StudentController::class,'details'])->name('students.details');
+
+    //Fees routes
+    Route::get('fees/detail/{id}',[FeeController::class,'feeDetail'])->name('fee.detail');
+    Route::get('fees/create/{id}',[FeeController::class,'create'])->name('fee.create');
+    Route::post('fees',[FeeController::class,'store'])->name('fee.store');
+    Route::get('feetopay/{id}',[FeeController::class,'feetopay'])->name('feetopay');
 
     //Temp image
 

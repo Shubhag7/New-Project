@@ -3,18 +3,25 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Fee;
 use App\Models\Student;
+use App\Models\StudentFee;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\TempImage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
 
 class StudentController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $students = Student::latest();
+        if(!empty($request->get('keyword'))){
+            $students = $students->where('student_name','like','%'.$request->get('keyword').'%');
+        }
+
         $students = $students->paginate(15);
         return view('student\list', compact('students'));
     }
@@ -178,6 +185,53 @@ class StudentController extends Controller
                 // $img->save($dPath);
 
                 $student->save();
+
+        //Creating admission fee for studen
+        $admissionFee = new StudentFee();
+        $admissionFee->student_id = $student->id;
+
+        $amount = Fee::where('fee_type','admission')->first();
+
+        $admissionFee->amount = $amount->amount;
+        $admissionFee->fee_type = 'admission';
+        $admissionFee->fee_status = 'unpaid';
+        $admissionFee->fee_include_status = 'include';
+
+        // Get the current date using Carbon
+        $currentDate = Carbon::today();
+
+        // Add 10 days to the current date
+        $futureDate = $currentDate->addDays(10);
+
+        $admissionFee->last_date_to_submit = $futureDate;
+        $admissionFee->save();
+
+        // creating regular fee for student
+
+        $admissionFee = new StudentFee();
+        $admissionFee->student_id = $student->id;
+
+        $amount = Fee::where('fee_type','regular')->where('class',$student->class)->first();
+
+        $admissionFee->amount = $amount->amount;
+        $admissionFee->fee_type = 'regular';
+        $admissionFee->fee_status = 'unpaid';
+        $admissionFee->fee_include_status = 'include';
+
+        // Get the current date using Carbon
+        $currentDate = Carbon::today();
+
+        // Add 10 days to the current date
+        $futureDate = $currentDate->addDays(10);
+
+        $admissionFee->last_date_to_submit = $futureDate;
+        $admissionFee->save();
+
+
+
+
+
+
 
             // $path = public_path('images/'.$request->email);
 
@@ -372,4 +426,14 @@ class StudentController extends Controller
             ]);
         }
     }
+
+    public function details($id,Request $request){
+
+        $student = Student::find(Crypt::decrypt($id));
+        // echo $student;
+        return view('student\details', compact('student'));
+    
+    }  
+    
+
 }

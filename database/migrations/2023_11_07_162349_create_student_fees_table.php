@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('student_fees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
-            $table->decimal('amount',6,2);
+            $table->decimal('amount',7,2);
             $table->enum('fee_type',['admission','late','regular','pending']);
             $table->enum('fee_status',['paid','unpaid']);
+            $table->enum('fee_include_status',['include','exclude']);
+            $table->date('last_date_to_submit');
             $table->timestamps();
         });
     }
